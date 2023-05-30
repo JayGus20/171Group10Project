@@ -48,18 +48,34 @@
 </head>
 
 <body>
+  <h1>Anime Recommendation Systems</h1>
+
+  <div class="login">
+    <h2>KNN Model</h2>
+      <p>Enter the name of an anime you have watched:</p>
+        <!-- Inputs for our ML model -->
+        <form action="{{ url_for('predict')}}" method="post">
+          <input type="text" name="anime_name_knn" placeholder="Cowboy Bebop" required="required" />
+          <button type="submit" class="btn btn-primary btn-block btn-large">Recommend Animes!</button>
+        </form>
+
+      <br>
+      <br>
+    <b> {{ prediction_knn }} </b>
+  </div>
+
  <div class="login">
-  <h2>Price Prediction</h2>
-    <p>Introduce the number of rooms and distance:</p>
-     <!-- Inputs for our ML model -->
-      <form action="{{ url_for('predict')}}" method="post">
-        <input type="text" name="anime_name" placeholder="Cowboy Bebop" required="required" />
-        <button type="submit" class="btn btn-primary btn-block btn-large">Recommend Animes!</button>
-      </form>
+  <h2>SVD Model</h2>
+    <p>This model will generate recommendations for a random user:</p>
+
+    <form action="{{ url_for('predict2')}}" method="post">
+      <input type="text" name="anime_name_svd" placeholder="Cowboy Bebop" required="required" />
+      <button type="submit" class="btn btn-primary btn-block btn-large">Recommend Animes!</button>
+    </form>
 
     <br>
     <br>
-  <b> {{ prediction_text }} </b>
+  <b> {{ prediction_svd }} </b>
  </div>
 </body>
 
