@@ -58,8 +58,12 @@ def predict2():
     """Grabs the input values and uses them to make prediction"""
     anime_name = request.form["anime_name_svd"]
 
-    item_count = 
     item_factors = svd_model.qi
+    item_count = item_factors.shape[0]
+    factor_count = item_factors.shape[1]
+
+    for i in range(0,item_count):
+        correlation = 
 
     return render_template('index.html', prediction_svd=f'{predictions}')
     
