@@ -81,29 +81,32 @@ def get_predictions(model_instance, user_id, anime_ids):
 
     predict_ratings = pd.DataFrame(columns=['Anime ID', 'Rating'])
 
+    # Pairs
+    reader = Reader(rating_scale=(1, 10))
+    predict_data = Dataset.load_from_df(pd.DataFrame({'User ID' : -1, 'Anime ID' : anime_ids, 'Rating' : -1}), reader)
+
+    predictions = model_instance.test(predict_data.build_full_trainset().build_testset())
+
+    return predictions
     # Use suprise model predict method to get predictions
     # This only works on userIDs that were in the training set
-    for anime_id in anime_ids:
-        prediction = model_instance.predict(
-            user_id, 
-            anime_id)
-
-        predict_ratings.loc[len(predict_ratings)] = [anime_id, prediction.est]
+    for prediction in predictions:
+        predict_ratings.loc[len(predict_ratings)] = [prediction.iid, prediction.est]
 
     return predict_ratings
 
 # Print out information for top N predictions
 def get_top_n_string(predictions, n):
     # Sort descending
-    predictions = predictions.sort_values('Rating', ascending=False)
+    predictions = sorted(predictions, key=lambda x: x.est, reverse=True)
     
     display_string = ""
     display_string += "Top {} predicted scores".format(n)
     # Print information about top n
     ranking = 1
-    for index, row in predictions.head(n).iterrows():
-        anime_id = row['Anime ID']
-        rating = row['Rating']
+    for prediction in predictions:
+        anime_id = prediction.iid
+        rating = prediction.est
         name = rid_to_name[str(int(anime_id))]
         display_string += "\n{}. {} ({}) - {}".format(ranking, name, anime_id, round(rating, 4))
         ranking += 1
