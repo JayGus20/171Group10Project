@@ -78,22 +78,14 @@ def create_predict_dataset(base_df, anime_ids, ratings):
 
 # Creates a dataframe for the predictions
 def get_predictions(model_instance, user_id, anime_ids):
-
-    predict_ratings = pd.DataFrame(columns=['Anime ID', 'Rating'])
-
-    # Pairs
+    # Create prediction set
     reader = Reader(rating_scale=(1, 10))
     predict_data = Dataset.load_from_df(pd.DataFrame({'User ID' : -1, 'Anime ID' : anime_ids, 'Rating' : -1}), reader)
 
+    # Predict
     predictions = model_instance.test(predict_data.build_full_trainset().build_testset())
 
     return predictions
-    # Use suprise model predict method to get predictions
-    # This only works on userIDs that were in the training set
-    for prediction in predictions:
-        predict_ratings.loc[len(predict_ratings)] = [prediction.iid, prediction.est]
-
-    return predict_ratings
 
 # Print out information for top N predictions
 def get_top_n_string(predictions, n):
@@ -102,6 +94,7 @@ def get_top_n_string(predictions, n):
     
     display_string = ""
     display_string += "Top {} predicted scores".format(n)
+
     # Print information about top n
     ranking = 1
     for prediction in predictions:
