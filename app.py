@@ -42,7 +42,7 @@ def predict():
     print("KNN Prediction Request")
     """Grabs the input values and uses them to make prediction"""
 
-    anime_name = request.form["anime_name_knn"]
+    anime_name = request.form["anime_name_knn"].lower()
     print(anime_name)
 
     try:    
@@ -51,7 +51,7 @@ def predict():
         print("Invalid Name")
         return render_template('index.html', prediction_text=f'Invalid Anime Name')
     
-    prediction_ids = knn_model.get_neighbors(int(raw_id), k=recommendation_count)  # this returns a list e.g. [127.20488798], so pick first element [0]
+    prediction_ids = knn_model.get_neighbors(knn_model.trainset.to_inner_iid(int(raw_id)), k=recommendation_count)  # this returns a list e.g. [127.20488798], so pick first element [0]
     prediction_ids = list((knn_model.trainset.to_raw_iid(inner_id) for inner_id in prediction_ids))
     prediction_names = [rid_to_name[str(rid)] for rid in prediction_ids]
     
