@@ -23,6 +23,9 @@ def read_item_names():
             rid_to_name[line[0]] = line[1]
             name_to_rid[line[1].lower()] = line[0]
 
+            # english name
+            name_to_rid[line[2].lower()] = line[0]
+
     return rid_to_name, name_to_rid
 
 rid_to_name, name_to_rid = read_item_names()
@@ -97,7 +100,7 @@ def get_top_n_string(predictions, n):
 
     # Print information about top n
     ranking = 1
-    for prediction in predictions:
+    for prediction in predictions[:n]:
         anime_id = prediction.iid
         rating = prediction.est
         name = rid_to_name[str(int(anime_id))]
