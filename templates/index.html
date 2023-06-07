@@ -2,48 +2,10 @@
 <html >
 <head>
   <meta charset="UTF-8">
-  <title>My Machine Learning Model</title>
+  <title>ECS 171 Group 10 Project Demo</title>
 
   <!-- Quick Start: CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-  <!-- Nav Bar -->
-  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav> -->
 
 </head>
 
@@ -52,7 +14,7 @@
   <div style="display: flex; width: 100%; justify-content: center; padding: 25px; ">
     <div class="login" style="padding: 25px; text-align: left; width: 50%;">
       <h2>KNN Model</h2>
-        <p>Enter the name of an anime you have watched:</p>
+        <p>Enter the name of an anime you have watched to receive recommendations:</p>
           <!-- Inputs for our ML model -->
           <form action="{{ url_for('predict')}}" method="post">
             <input type="text" name="anime_name_knn" placeholder="Cowboy Bebop" required="required" />
@@ -63,13 +25,15 @@
         <pre>{{ prediction_knn }}</pre>
     </div>
 
-    <div class="login" style="padding: 25px; text-align: right; width: 50%;">
+    <div class="login" style="padding: 25px; text-align: left; width: 50%;">
       <h2>SVD Model</h2>
-      <p>This model will generate recommendations for a user:</p>
+      <p>Enter as many animes and your ratings for them with the format shown below to receive recommendations:</p>
 
       <form action="{{ url_for('predict2')}}" method="post" style="display: flex;">
         <!-- <input type="text" name="anime_name_svd" placeholder="Cowboy Bebop" required="required" /> -->
-        <textarea rows="10" cols="50" name="anime_name_svd" placeholder="Cowboy Bebop" required="required"  style="display: block;">{{svd_input}}</textarea>
+        <textarea rows="10" cols="50" name="anime_name_svd" 
+          placeholder="Toradora! \ 9&#10;Clannad \ 10&#10;Your Lie In April \ 10&#10;Rascal Does Not Dream of Bunny Girl Senpai \ 9&#10;Horimiya \ 9&#10;Gintama \ 5" 
+          required="required"  style="display: block;">{{svd_input}}</textarea>
         <button type="submit" class="btn btn-primary btn-block btn-large">Recommend Animes!</button>
       </form>
 
